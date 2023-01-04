@@ -22,10 +22,15 @@
               Users
             </NuxtLink>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="!hasToken">
             <NuxtLink class="nav-link" active-class="active" target="_blank" to="/login">
               Login
             </NuxtLink>
+          </li>
+          <li class="nav-item" v-else>
+            <a href="#" class="nav-link" @click.prevent="logout">
+              Logout
+            </a>
           </li>
         </ul>
       </div>
@@ -35,6 +40,17 @@
 
 <script>
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  computed: {
+    hasToken() {
+      return this.$store.getters.hasToken
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>

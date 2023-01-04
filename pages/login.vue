@@ -1,7 +1,10 @@
 <template>
   <section>
     <h1 class="p-4 text-center">Login Page</h1>
-    <form class="row">
+    <div v-if="$route.query.message" class="alert alert-danger">
+      Need login first
+    </div>
+    <form class="row" @submit.prevent="onSubmit">
       <div class="mt-3 col-sm-12 col-md-12 col-lg-6">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" id="email">
@@ -20,6 +23,12 @@
 
 <script>
 export default {
-  layout: 'empty'
+  layout: 'empty',
+  methods: {
+    onSubmit() {
+      this.$store.dispatch('login')
+      this.$router.push('/')
+    }
+  }
 }
 </script>
